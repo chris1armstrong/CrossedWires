@@ -13,6 +13,8 @@ public class CrossedWires {
 		
 		this.firstPath = generatePath(steps1);
 		this.secondPath = generatePath(steps2);
+		//System.out.println(this.firstPath);
+		//System.out.println(this.secondPath);
 	}
 
 	private ArrayList<Wire> generatePath(String[] steps) { //U, D, L, R
@@ -66,7 +68,7 @@ public class CrossedWires {
 			for(Wire j : this.secondPath) {
 				Coord crossing = i.intersect(j);
 				if (crossing != null) {
-					Integer dist = crossing.getX() + crossing.getY();
+					Integer dist = Math.abs(crossing.getX()) + Math.abs(crossing.getY());
 					if (current == null) {
 						current = crossing;
 						currentDist = dist;

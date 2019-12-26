@@ -15,4 +15,8 @@ public class Coord {
 	public Integer getY() {
 		return this.y;
 	}
+	
+	public String toString() {
+		return "(" + this.getX() + "," + this.getY() + ")";
+	}
 }
