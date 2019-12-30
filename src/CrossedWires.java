@@ -13,8 +13,6 @@ public class CrossedWires {
 		
 		this.firstPath = generatePath(steps1);
 		this.secondPath = generatePath(steps2);
-		//System.out.println(this.firstPath);
-		//System.out.println(this.secondPath);
 	}
 
 	private ArrayList<Wire> generatePath(String[] steps) { //U, D, L, R
@@ -58,28 +56,36 @@ public class CrossedWires {
 		String line2 = reader.nextLine();
 		reader.close();
 		CrossedWires system = new CrossedWires(line1, line2);
-		System.out.println(system.findCrossing());
+		ArrayList<CrossingPoint> cpoints = system.findCrossings();
+		CrossingPoint result = findShortest(cpoints);
+		System.out.println(result);
 	}
 
-	private Integer findCrossing() {
-		Coord current = null;
-		Integer currentDist = null;
+	private static CrossingPoint findShortest(ArrayList<CrossingPoint> cpoints) {
+		CrossingPoint result = null;
+		for (CrossingPoint i : cpoints) {
+			if (result == null) {
+				result = i;
+			} else if (i.getManhattanDist() < result.getManhattanDist()) {
+				result = i;
+			}
+		}
+		return result;
+	}
+
+	private ArrayList<CrossingPoint> findCrossings() {
+		ArrayList<CrossingPoint> crossingPoints = new ArrayList<CrossingPoint>();
 		for(Wire i : this.firstPath) {
 			for(Wire j : this.secondPath) {
 				Coord crossing = i.intersect(j);
 				if (crossing != null) {
 					Integer dist = Math.abs(crossing.getX()) + Math.abs(crossing.getY());
-					if (current == null) {
-						current = crossing;
-						currentDist = dist;
-					} else if (dist < currentDist) {
-						current = crossing;
-						currentDist = dist;
-					}
+					CrossingPoint cpoint = new CrossingPoint(crossing.getX(),crossing.getY(),dist);
+					crossingPoints.add(cpoint);
 				}
 			}
 		}
-		return currentDist;
+		return crossingPoints;
 	}
 
 }

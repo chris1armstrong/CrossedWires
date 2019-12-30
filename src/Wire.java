@@ -87,7 +87,7 @@ public class Wire {
 			
 			crossing = new Coord(vertX, horzY);
 		}
-		System.out.println("Found intersection: " + crossing);
+		//System.out.println("Found intersection: " + crossing);
 		return crossing;
 	}
 
