@@ -94,4 +94,5 @@ public class Wire {
 	public String toString() {
 		return orientation + " " + this.getStart() + " " + this.getEnd();
 	}
+	
 }

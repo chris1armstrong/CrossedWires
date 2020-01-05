@@ -46,6 +46,7 @@ public class CrossedWires {
 			result.add(wire);
 			current = end;
 		}
+		
 		return result;
 	}
 
