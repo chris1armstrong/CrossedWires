@@ -90,6 +90,16 @@ public class Wire {
 		//System.out.println("Found intersection: " + crossing);
 		return crossing;
 	}
+	
+	public Integer weight() {
+		Integer weight = 0;
+		if (this.orientation == "V") {
+			weight = this.getEnd().getY() - this.getStart().getY();
+		} else {
+			weight = this.getEnd().getX() - this.getStart().getX();
+		}
+		return weight;
+	}
 
 	public String toString() {
 		return orientation + " " + this.getStart() + " " + this.getEnd();

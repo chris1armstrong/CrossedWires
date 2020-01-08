@@ -15,7 +15,7 @@ public class CrossedWires {
 		this.secondPath = generatePath(steps2);
 	}
 
-	private ArrayList<Wire> generatePath(String[] steps) { //U, D, L, R
+	private ArrayList<Wire> generatePath(String[] steps) {
 		ArrayList<Wire> result = new ArrayList<Wire>();
 		Coord current = new Coord(0,0);
 		
@@ -44,8 +44,11 @@ public class CrossedWires {
 			Coord end = new Coord(x,y);
 			Wire wire = new Wire(current,end);
 			result.add(wire);
+			current.addConnected(wire);
+			end.addConnected(wire);
 			current = end;
 		}
+		//rectify self overlaps here
 		
 		return result;
 	}

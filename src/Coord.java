@@ -22,6 +22,10 @@ public class Coord {
 	public ArrayList<Wire> getConnected() {
 		return this.connected;
 	}
+
+	public void addConnected(Wire wire) {
+		this.connected.add(wire);
+	}
 	
 	public String toString() {
 		return "(" + this.getX() + "," + this.getY() + ")";
