@@ -1,14 +1,13 @@
-import java.util.ArrayList;
 
 public class Coord {
 	private Integer x;
 	private Integer y;
-	private ArrayList<Wire> connected;
+	private Boolean visited;
 	
 	public Coord(Integer x, Integer y) {
 		this.x = x;
 		this.y = y;
-		this.connected = new ArrayList<Wire>();
+		this.visited = false;
 	}
 	
 	public Integer getX() {
@@ -19,12 +18,12 @@ public class Coord {
 		return this.y;
 	}
 	
-	public ArrayList<Wire> getConnected() {
-		return this.connected;
+	public Boolean isVisited() {
+		return this.visited;
 	}
-
-	public void addConnected(Wire wire) {
-		this.connected.add(wire);
+	
+	public void setVisited() {
+		this.visited = true;
 	}
 	
 	public String toString() {

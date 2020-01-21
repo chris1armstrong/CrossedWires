@@ -18,6 +18,7 @@ public class CrossedWires {
 	private ArrayList<Wire> generatePath(String[] steps) {
 		ArrayList<Wire> result = new ArrayList<Wire>();
 		Coord current = new Coord(0,0);
+		Integer previousTotal = 0;
 		
 		for(String i : steps) {
 			char c = i.charAt(0);
@@ -42,13 +43,12 @@ public class CrossedWires {
 			}
 			
 			Coord end = new Coord(x,y);
-			Wire wire = new Wire(current,end);
+			Wire wire = new Wire(current,end,previousTotal);
+
 			result.add(wire);
-			current.addConnected(wire);
-			end.addConnected(wire);
 			current = end;
+			previousTotal = previousTotal + dist;
 		}
-		//rectify self overlaps here
 		
 		return result;
 	}
@@ -61,11 +61,25 @@ public class CrossedWires {
 		reader.close();
 		CrossedWires system = new CrossedWires(line1, line2);
 		ArrayList<CrossingPoint> cpoints = system.findCrossings();
-		CrossingPoint result = findShortest(cpoints);
+		CrossingPoint result = findShortestManhat(cpoints);
 		System.out.println(result);
+		Integer steps = findSteps(cpoints);
+		System.out.println(steps);
 	}
 
-	private static CrossingPoint findShortest(ArrayList<CrossingPoint> cpoints) {
+	private static Integer findSteps(ArrayList<CrossingPoint> cpoints) {
+		Integer minDist = Integer.MAX_VALUE;
+		Integer current = null;
+		for (CrossingPoint i : cpoints) {
+			current = i.steps();
+			if (current < minDist) {
+				minDist = current;
+			}
+		}
+		return minDist;
+	}
+
+	private static CrossingPoint findShortestManhat(ArrayList<CrossingPoint> cpoints) {
 		CrossingPoint result = null;
 		for (CrossingPoint i : cpoints) {
 			if (result == null) {
@@ -83,8 +97,7 @@ public class CrossedWires {
 			for(Wire j : this.secondPath) {
 				Coord crossing = i.intersect(j);
 				if (crossing != null) {
-					Integer dist = Math.abs(crossing.getX()) + Math.abs(crossing.getY());
-					CrossingPoint cpoint = new CrossingPoint(crossing.getX(),crossing.getY(),dist);
+					CrossingPoint cpoint = new CrossingPoint(crossing.getX(),crossing.getY(),i,j);
 					crossingPoints.add(cpoint);
 				}
 			}

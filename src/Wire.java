@@ -3,8 +3,9 @@ public class Wire {
 	private Coord start;
 	private Coord end;
 	private String orientation;
+	private Integer previousTotal;
 	
-	public Wire(Coord start, Coord end) {
+	public Wire(Coord start, Coord end, Integer previousTotal) {
 		this.start = start;
 		this.end = end;
 		if (start.getX() == end.getX()) {
@@ -12,6 +13,7 @@ public class Wire {
 		} else {
 			this.orientation = "H";
 		}
+		this.previousTotal = previousTotal;
 	}
 
 	public Coord getStart() {
@@ -87,7 +89,6 @@ public class Wire {
 			
 			crossing = new Coord(vertX, horzY);
 		}
-		//System.out.println("Found intersection: " + crossing);
 		return crossing;
 	}
 	
@@ -104,5 +105,13 @@ public class Wire {
 	public String toString() {
 		return orientation + " " + this.getStart() + " " + this.getEnd();
 	}
-	
+
+	public void setEnd(Coord coord) {
+		this.end = coord;
+	}
+
+	public Integer getPreviousTotal() {
+		return previousTotal;
+	}
+
 }
